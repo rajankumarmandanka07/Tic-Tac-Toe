@@ -43,3 +43,17 @@ cells.forEach((cell, index) => {
 
 });
 
+
+const checkWinner = () => {
+    //Check for the winner if find it then return true
+    return winningCombinations.some(combination =>
+        combination.every(index => board[index] === currentPlayer)
+    );
+}
+
+restartButton.addEventListener('click', () => {
+    board.fill(null);
+    cells.forEach(cell => (cell.textContent = ''));
+    currentPlayer = 'X';
+    messageDiv.textContent = `Player ${currentPlayer}'s Turn`;
+})
