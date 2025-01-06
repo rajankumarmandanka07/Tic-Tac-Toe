@@ -26,7 +26,6 @@ cells.forEach((cell, index) => {
         cell.textContent = currentPlayer;
         board[index] = currentPlayer;
 
-        // Check for the winner
         if(checkWinner()) {
             messageDiv.textContent = `Player ${currentPlayer} Wins!`;
             return;
@@ -53,7 +52,7 @@ const checkWinner = () => {
 
 restartButton.addEventListener('click', () => {
     board.fill(null);
-    cells.forEach(cell => (cell.textContent = ''));
+    cells.forEach(cell => cell.textContent = '');
     currentPlayer = 'X';
     messageDiv.textContent = `Player ${currentPlayer}'s Turn`;
 })
