@@ -19,7 +19,7 @@ const winningCombinations = [
 cells.forEach((cell, index) => {
     // Add eventListener for click.
     cell.addEventListener('click', () => {
-        // Check that user try to clikc on same button or the user is already win.
+        // Check that user try to click on same button or the user is already win.
         if(cell.textContent || checkWinner()) return;
 
         // Update text in the cell and also update the value in board array.
