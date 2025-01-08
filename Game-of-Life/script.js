@@ -1,10 +1,11 @@
+let interval;
 let rows = 30;
 let cols = 30;
 let running = false;
+let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
 
 const initializeBoard = (rows, cols) => {
     const board = document.getElementById('grid');
-    let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
 
     board.style.gridTemplateRows = `repeat(${rows}, 20px)`
     board.style.gridTemplateColumns = `repeat(${cols}, 20px)`
@@ -23,8 +24,6 @@ const initializeBoard = (rows, cols) => {
             board.appendChild(cell);
         }
     }
-
-    return gameBoard;
 }
 
 const updateBoard = (gameBoard) => {
@@ -54,6 +53,7 @@ const nextGeneration = (gameBoard) => {
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             const neighbors = countNeighbors(i, j, gameBoard);
+
             if (gameBoard[i][j] === 1) {
                 newBoard[i][j] = neighbors === 2 || neighbors === 3 ? 1 : 0;
             } else {
@@ -62,27 +62,36 @@ const nextGeneration = (gameBoard) => {
         }
     }
 
-    gameBoard = newBoard;
-    gameBoard = updateBoard(gameBoard);
+    return updateBoard(newBoard);
 }
 
-let gameBoard = initializeBoard(rows, cols);
-
-const start = () => {
-    gameBoard = nextGeneration(gameBoard);
-    console.log(1);
-    
-}
-
-// start();
+initializeBoard(rows, cols);
 
 const playGame = () => {
     if (!running) {
         running = true;
-        interval = setInterval(start(), 200);
+        interval = setInterval(() => {
+            gameBoard = nextGeneration(gameBoard);
+        }, 200);
     }
-    // console.log(interval);
 }
 
+const pauseGame = () => {
+    running = false;
+    clearInterval(interval);
+}
+
+const resetGame = () => {
+    pauseGame();
+    gameBoard = initializeBoard(rows, cols);
+}
+
+const randomizeBoard = () => {
+    gameBoard = gameBoard.map(row => row.map(() => Math.random() > 0.7 ? 1 : 0));
+    gameBoard = updateBoard(gameBoard);
+}
 
 document.getElementById('playBtn').addEventListener('click', playGame);
+document.getElementById('pauseBtn').addEventListener('click', pauseGame);
+document.getElementById('resetBtn').addEventListener('click', resetGame);
+document.getElementById('randomBtn').addEventListener('click', randomizeBoard);
