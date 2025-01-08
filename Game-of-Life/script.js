@@ -81,6 +81,12 @@ const resetGame = () => {
     updateGrid();
 }
 
+function randomizeGrid() {
+    gameGrid = gameGrid.map(row => row.map(() => Math.random() > 0.7 ? 1 : 0));
+    updateGrid();
+  }
+
 document.getElementById('startBtn').addEventListener('click', startGame);
 document.getElementById('pauseBtn').addEventListener('click', pauseGame);
 document.getElementById('resetBtn').addEventListener('click', resetGame);
+document.getElementById('randomBtn').addEventListener('click', randomizeGrid);
