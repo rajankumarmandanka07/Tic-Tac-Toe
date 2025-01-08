@@ -1,9 +1,9 @@
-let rows = 30
-let cols = 30
-let running = false;
-const board = document.getElementById('grid');
+let rows = 30;
+let cols = 30;
 
-const initializeBoard = () => {
+const initializeBoard = (rows, cols) => {
+    const board = document.getElementById('grid');
+    let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
     board.style.gridTemplateRows = `repeat(${rows}, 20px)`
     board.style.gridTemplateColumns = `repeat(${cols}, 20px)`
     board.innerHTML = ''
@@ -14,10 +14,29 @@ const initializeBoard = () => {
             cell.classList.add('cell');
             cell.dataset.row = r;
             cell.dataset.col = c;
-            cell.addEventListener('click', () => toggleCell(r, c));
+            cell.addEventListener('click', () => {
+                gameBoard[r][c] = gameBoard[r][c] === 0 ? 1 : 0;
+                updateBoard(gameBoard);
+            });
             board.appendChild(cell);
         }
     }
 }
 
-initializeBoard();
+const updateBoard = (gameBoard) => {
+    document.querySelectorAll('.cell').forEach(cell => {
+        const row = cell.dataset.row;
+        const col = cell.dataset.col;
+        cell.classList.toggle('alive', gameBoard[row][col] === 1)
+    });
+}
+
+
+const start = () => {
+    
+    let running = false;
+    
+    initializeBoard(rows, cols);
+}
+
+start();
