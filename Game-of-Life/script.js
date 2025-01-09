@@ -45,6 +45,10 @@ class GameBoard {
     }
 }
 
+class GameNextGeneration {
+    
+}
+
 
 const rows = 30;
 const cols = 30;
