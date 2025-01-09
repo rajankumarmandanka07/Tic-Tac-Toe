@@ -63,7 +63,22 @@ class GameNextGeneration {
         return count;
     }
 
-    
+    generateNextBoard() {
+        const newBoard = this.gameBoard.board.map(arr => [...arr]);
+
+        for (let i = 0; i < this.gameBoard.rows; i++) {
+            for (let j = 0; j < this.gameBoard.cols; j++) {
+
+                const neighbors = this.countNeighbors(i, j);
+                if (this.gameBoard.board[i][j] === 1) {
+                    newBoard[i][j] = neighbors === 2 || neighbors === 3 ? 1 : 0;
+                } else {
+                    newBoard[i][j] = neighbors === 3 ? 1 : 0;
+                }
+            }
+        }
+        this.gameBoard.board = newBoard;
+    }
 }
 
 
