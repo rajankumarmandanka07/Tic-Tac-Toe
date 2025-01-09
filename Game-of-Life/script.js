@@ -1,7 +1,7 @@
 let interval;
 let rows = 30;
 let cols = 30;
-let running = false;
+let play = false;
 let gameBoard = Array.from({ length: rows }, () => Array(cols).fill(0));
 
 const initializeBoard = (rows, cols) => {
@@ -68,8 +68,8 @@ const nextGeneration = (gameBoard) => {
 initializeBoard(rows, cols);
 
 const playGame = () => {
-    if (!running) {
-        running = true;
+    if (!play) {
+        play = true;
         interval = setInterval(() => {
             gameBoard = nextGeneration(gameBoard);
         }, 200);
@@ -77,13 +77,13 @@ const playGame = () => {
 }
 
 const pauseGame = () => {
-    running = false;
+    play = false;
     clearInterval(interval);
 }
 
 const resetGame = () => {
     pauseGame();
-    gameBoard = initializeBoard(rows, cols);
+    initializeBoard(rows, cols);
 }
 
 const randomizeBoard = () => {
