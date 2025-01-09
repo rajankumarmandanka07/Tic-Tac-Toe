@@ -82,7 +82,40 @@ class GameNextGeneration {
 }
 
 class GameController {
-    
+    constructor(gameBoard, nextGenLogic) {
+        this.gameBoard = gameBoard;
+        this.nextGenLogic = nextGenLogic;
+        this.interval = null;
+        this.playing = false;
+    }
+
+    play() {
+        if (!this.playing) {
+            this.playing = true;
+            this.interval = setInterval(() => {
+                this.nextGenLogic.generateNextBoard();
+                this.gameBoard.renderBoard();
+            }, 200);
+        }
+    }
+
+    pause() {
+        this.playing = false;
+        clearInterval(this.interval);
+    }
+
+    reset() {
+        this.pause();
+        this.gameBoard.board = this.gameBoard.initializeBoard();
+        this.gameBoard.renderBoard();
+    }
+
+    randomInput() {
+        this.gameBoard.board = this.gameBoard.board.map(row =>
+            row.map(() => Math.random() > 0.7 ? 1 : 0)
+        );
+        this.gameBoard.renderBoard();
+    }
 }
 
 
