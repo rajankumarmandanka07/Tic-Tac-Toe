@@ -81,6 +81,10 @@ class GameNextGeneration {
     }
 }
 
+class GameController {
+    
+}
+
 
 const rows = 30;
 const cols = 30;
