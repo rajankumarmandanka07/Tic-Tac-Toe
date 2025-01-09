@@ -34,6 +34,15 @@ class GameBoard {
     toggleCellState(row, col) {
         this.board[row][col] = this.board[row][col] === 0 ? 1 : 0;
     }
+
+    renderBoard() {
+        const cells = this.container.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row, 10);
+            const col = parseInt(cell.dataset.col, 10);
+            cell.classList.toggle('alive', this.board[row][col] === 1);
+        });
+    }
 }
 
 
