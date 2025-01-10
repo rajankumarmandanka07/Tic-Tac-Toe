@@ -5,6 +5,8 @@ class GameBoard {
         this.board = this.initializeBoard();
         this.container = document.getElementById(containerId);
         this.setupBoard();
+        this.population = 0;
+        this.updatePopulationDisplay();
     }
 
     initializeBoard() {
@@ -25,6 +27,7 @@ class GameBoard {
                 cell.addEventListener('click', () => {
                     this.toggleCellState(r, c);
                     this.renderBoard();
+                    this.updatePopulationDisplay();
                 });
                 this.container.appendChild(cell);
             }
@@ -33,6 +36,15 @@ class GameBoard {
 
     toggleCellState(row, col) {
         this.board[row][col] = this.board[row][col] === 0 ? 1 : 0;
+    }
+
+    calculatePopulation() {
+        return this.board.flat().reduce((sum, cell) => sum + cell, 0);
+    }
+
+    updatePopulationDisplay() {
+        this.population = this.calculatePopulation();
+        document.getElementById('populationCount').textContent = this.population;
     }
 
     renderBoard() {
@@ -63,7 +75,7 @@ class GameNextGeneration {
         return count;
     }
 
-    generateNextBoard() {
+    nextGeneration() {
         const newBoard = this.gameBoard.board.map(arr => [...arr]);
 
         for (let i = 0; i < this.gameBoard.rows; i++) {
@@ -87,14 +99,18 @@ class GameController {
         this.nextGenLogic = nextGenLogic;
         this.interval = null;
         this.playing = false;
+        this.generation = 0;
+        this.updateGenerationDisplay();
     }
 
     play() {
         if (!this.playing) {
             this.playing = true;
             this.interval = setInterval(() => {
-                this.nextGenLogic.generateNextBoard();
+                this.nextGenLogic.nextGeneration();
                 this.gameBoard.renderBoard();
+                this.gameBoard.updatePopulationDisplay();
+                this.incrementGeneration();
             }, 200);
         }
     }
@@ -106,18 +122,32 @@ class GameController {
 
     reset() {
         this.pause();
+        this.generation = 0;
+        this.updateGenerationDisplay();
         this.gameBoard.board = this.gameBoard.initializeBoard();
         this.gameBoard.renderBoard();
+        this.gameBoard.updatePopulationDisplay();
     }
 
     randomInput() {
         this.gameBoard.board = this.gameBoard.board.map(row =>
             row.map(() => Math.random() > 0.7 ? 1 : 0)
         );
+        this.generation = 0;
+        this.updateGenerationDisplay();
         this.gameBoard.renderBoard();
+        this.gameBoard.updatePopulationDisplay();
+    }
+
+    incrementGeneration() {
+        this.generation++;
+        this.updateGenerationDisplay();
+    }
+
+    updateGenerationDisplay() {
+        document.getElementById('generationCount').textContent = this.generation;
     }
 }
-
 
 const rows = 30;
 const cols = 30;
