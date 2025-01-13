@@ -23,7 +23,7 @@ class Battlefield {
   }
 }
 
-class GameLogic {
+class GamePlay {
   constructor(battlefield, instructionId, resultsId, nextTurnButtonId) {
     this.battlefield = battlefield;
     this.instructionElement = document.getElementById(instructionId);
@@ -37,10 +37,10 @@ class GameLogic {
     this.totalMisses = 0;
 
     this.nextTurnButton.addEventListener("click", () => this.handleNextTurn());
-    this.battlefield.battlefieldElement.addEventListener("click", event => this.handleShipClick(event));
+    this.battlefield.battlefieldElement.addEventListener("click", event => this.playerMove(event));
   }
 
-  handleShipClick(event) {
+  playerMove(event) {
     const ship = event.target;
     if (!ship.classList.contains("ship") || ship.classList.contains("hit") || ship.classList.contains("miss")) return;
 
@@ -93,8 +93,7 @@ class GameLogic {
   endGame() {
     this.instructionElement.textContent = "Game Over!";
 
-    // Make the resultsElement visible
-    this.resultsElement.style.display = "block"; // Show the results
+    this.resultsElement.style.display = "block";
 
     this.resultsElement.innerHTML = `
       <h2>Results:</h2>
@@ -109,8 +108,7 @@ class GameLogic {
     restartButton.addEventListener("click", () => this.restartGame());
     this.resultsElement.appendChild(restartButton);
 
-    // Remove the event listener for ship clicks
-    this.battlefield.battlefieldElement.removeEventListener("click", event => this.handleShipClick(event));
+    this.battlefield.battlefieldElement.removeEventListener("click", event => this.playerMove(event));
 
     // Disable all ships
     const ships = this.battlefield.battlefieldElement.querySelectorAll('.ship');
@@ -141,7 +139,7 @@ class GameLogic {
 class Game {
   constructor(battlefieldSize) {
     this.battlefield = new Battlefield(battlefieldSize, "battlefield");
-    this.logic = new GameLogic(this.battlefield, "instruction", "results", "next-turn");
+    this.logic = new GamePlay(this.battlefield, "instruction", "results", "next-turn");
   }
 
   start() {
