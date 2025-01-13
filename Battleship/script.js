@@ -80,7 +80,62 @@ class GameLogic {
     }
   }
 
-  
+  handleNextTurn() {
+    if (this.currentPlayer === 1) {
+      this.currentPlayer = 2;
+      this.instructionElement.textContent = "Player 2: Attack Player 1's ships.";
+      this.nextTurnButton.disabled = true;
+
+      this.battlefield.ships.forEach(ship => ship.classList.remove("place"));
+    }
+  }
+
+  endGame() {
+    this.instructionElement.textContent = "Game Over!";
+
+    // Make the resultsElement visible
+    this.resultsElement.style.display = "block"; // Show the results
+
+    this.resultsElement.innerHTML = `
+      <h2>Results:</h2>
+      <p>Total Hits: ${this.totalHits}</p>
+      <p>Total Misses: ${this.totalMisses}</p>
+    `;
+    this.nextTurnButton.disabled = true;
+
+    const restartButton = document.createElement("button");
+    restartButton.textContent = "Restart";
+    restartButton.className = "btn btn-success btn-lg mt-3";
+    restartButton.addEventListener("click", () => this.restartGame());
+    this.resultsElement.appendChild(restartButton);
+
+    // Remove the event listener for ship clicks
+    this.battlefield.battlefieldElement.removeEventListener("click", event => this.handleShipClick(event));
+
+    // Disable all ships
+    const ships = this.battlefield.battlefieldElement.querySelectorAll('.ship');
+    ships.forEach(ship => {
+      ship.disabled = true;
+      ship.style.pointerEvents = 'none';
+    });
+  }
+
+  restartGame() {
+    this.battlefield.reset();
+    this.resetGameState();
+    this.instructionElement.textContent = "Player 1: Place your ships.";
+    this.resultsElement.style.display = "none";
+    this.resultsElement.innerHTML = "";
+  }
+
+  resetGameState() {
+    this.currentPlayer = 1;
+    this.player1Ships.clear();
+    this.player2Hits.clear();
+    this.totalHits = 0;
+    this.totalMisses = 0;
+    this.nextTurnButton.disabled = true;
+  }
 }
 
 class Game {
