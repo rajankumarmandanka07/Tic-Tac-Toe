@@ -14,7 +14,7 @@
         font-family: Arial, sans-serif;
       }
 
-      #grid {
+      #battlefield {
         display: grid;
         grid-template-columns: repeat(10, 1fr);
         gap: 2px;
@@ -28,7 +28,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
-      .cell {
+      .ship {
         width: 100%;
         height: 100%;
         border: 1px solid #ced4da;
@@ -38,22 +38,22 @@
         transition: background-color 0.3s ease, transform 0.2s;
       }
 
-      .cell:hover {
+      .ship:hover {
         background-color: #e9ecef;
         transform: scale(1.05);
       }
 
-      .cell.ship {
+      .ship.place {
         background-color: #0d6efd;
         color: white;
       }
 
-      .cell.hit {
+      .ship.hit {
         background-color: red;
         color: white;
       }
 
-      .cell.miss {
+      .ship.miss {
         background-color: gray;
         color: white;
       }
@@ -91,13 +91,17 @@
         margin: 0 auto;
         padding: 20px;
       }
+
+      #results {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <div class="container text-center mt-4">
       <h1>Battleship Game</h1>
       <p id="instruction" class="mt-3">Player 1: Place your ships.</p>
-      <div id="grid" class="grid mt-4"></div>
+      <div id="battlefield" class="battlefield mt-4"></div>
       <button id="next-turn" class="btn btn-primary mt-3" disabled>
         Next Turn
       </button>
