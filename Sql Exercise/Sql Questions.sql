@@ -11,3 +11,8 @@ SHOW CREATE TABLE actor;
 
 -- Q4 Display the first and last names of all actors from the table actor. (200 rows) 
 SELECT first_name, last_name FROM actor;
+
+-- Q5 Which actors have the last name ‘Johansson’. (3 rows) 
+SELECT first_name, last_name 
+FROM actor 
+WHERE last_name = 'Johansson';
