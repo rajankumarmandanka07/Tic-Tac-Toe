@@ -21,3 +21,9 @@ WHERE last_name = 'Johansson';
 SELECT actor_id, first_name, last_name 
 FROM actor 
 WHERE first_name = 'Joe';
+
+-- Q8 Which last names are not repeated? (66 rows) 
+SELECT last_name 
+FROM actor 
+GROUP BY last_name 
+HAVING COUNT(last_name) = 1;
