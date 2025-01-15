@@ -33,3 +33,9 @@ SELECT last_name, COUNT(*) as actore_count
 FROM actor
 GROUP BY last_name
 ORDER BY actore_count;
+
+-- Q10 Use JOIN to display the first and last names, as well as the address, of each staff member. Use the tables “staff” and “address”. (2 rows)
+SELECT s.first_name, s.last_name, a.address 
+FROM staff AS s
+JOIN address AS a
+ON s.address_id = a.address_id;
