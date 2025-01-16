@@ -149,3 +149,18 @@ WHERE name LIKE '%d_';
 SELECT code, name, continent, gnp 
 FROM country
 ORDER BY gnp DESC LIMIT 2 OFFSET 1;
+
+
+-- Execute the following commands to create 2 new tables and insert records 
+-- 
+-- Table structure for table `departments` 
+-- 
+CREATE TABLE IF NOT EXISTS `departments` ( 
+`DEPARTMENT_ID` decimal(4,0) NOT NULL DEFAULT '0', 
+`DEPARTMENT_NAME` varchar(30) NOT NULL, 
+`MANAGER_ID` decimal(6,0) DEFAULT NULL, 
+`LOCATION_ID` decimal(4,0) DEFAULT NULL, 
+PRIMARY KEY (`DEPARTMENT_ID`), 
+KEY `DEPT_MGR_FK` (`MANAGER_ID`), 
+KEY `DEPT_LOCATION_IX` (`LOCATION_ID`) 
+) ; 
