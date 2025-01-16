@@ -1,5 +1,9 @@
 USE sakila;
 
+-- SQL Practice - Part 1
+
+-- Use “Sakila” database for the following questions
+
 -- Q1 Display all tables available in the database “sakila”
 SHOW TABLES;
 
@@ -39,3 +43,12 @@ SELECT s.first_name, s.last_name, a.address
 FROM staff AS s
 JOIN address AS a
 ON s.address_id = a.address_id;
+
+
+-- Use “world” database for the following questions 
+
+USE world;
+
+-- Q1 Display all columns and 10 rows from table “city”.(10 rows) 
+
+SELECT * FROM city LIMIT 10;
