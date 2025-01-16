@@ -57,3 +57,9 @@ SELECT * FROM city LIMIT 15, 5;
 
 -- Q3 How many rows are available in the table city. (1 row)-4079. 
 SELECT COUNT(*) FROM city;
+
+-- Q4 Using city table find out which is the most populated city. 
+-- ('Mumbai (Bombay)', '10500000') 
+
+SELECT name , population FROM city 
+ORDER BY population DESC LIMIT 1;
