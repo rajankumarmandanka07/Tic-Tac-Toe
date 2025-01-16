@@ -101,3 +101,10 @@ ON a.actor_id = f.actor_id
 GROUP BY a.actor_id, a.first_name, a.last_name
 ORDER BY COUNT(f.film_id) DESC
 LIMIT 1;
+
+-- Q2 What is the average length of films by category? (16 rows) 
+SELECT c.name, AVG(f.length) AS AVerage_Length
+From category AS c 
+JOIN film_category AS fc ON c.category_id = fc.category_id
+JOIN film AS f ON fc.film_id = f.film_id
+GROUP BY c.name;
