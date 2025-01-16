@@ -263,3 +263,12 @@ SELECT DEPARTMENT_ID, MAX(SALARY) AS MAX_SALARY
 FROM employees
 GROUP BY DEPARTMENT_ID
 HAVING MAX_SALARY > (SELECT AVG(SALARY) FROM employees);
+
+-- Q3 Write a query to display department name and, department id of the employees whose salary is less than 35000. .(USE:SUB-QUERY)(11 rows) 
+SELECT DEPARTMENT_NAME, DEPARTMENT_ID
+FROM departments
+WHERE DEPARTMENT_ID IN (
+	SELECT DISTINCT DEPARTMENT_ID
+	FROM employees
+	WHERE SALARY < 35000
+);
