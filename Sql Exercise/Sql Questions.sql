@@ -119,3 +119,10 @@ ON fc.film_id = f.film_id
 GROUP BY c.name
 HAVING AVG(f.length) > 120
 ORDER BY Average_Length DESC LIMIT 5;
+
+-- Q4 How many copies of the film “Hunchback Impossible” exist in the inventory system? (6)
+SELECT COUNT(*) AS Total_Copies
+FROM inventory  i
+JOIN film  f 
+ON i.film_id = f.film_id
+WHERE f.title = 'Hunchback Impossible';
