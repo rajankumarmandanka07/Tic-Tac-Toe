@@ -197,7 +197,7 @@ INSERT INTO `departments` (`DEPARTMENT_ID`, `DEPARTMENT_NAME`, `MANAGER_ID`, `LO
 ('260', 'Recruiting', '0', '1700'), 
 ('270', 'Payroll', '0', '1700'); 
 
-SELECT * FROM departments;
+ 
 
 
 
@@ -246,3 +246,14 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PHO
 ('115', 'Alexander', 'Khoo', 'AKHOO', '515.127.4562', '1987-07-02', 'PU_CLERK', '3100.00', '0.00', '114', '30'), 
 ('116', 'Shelli', 'Baida', 'SBAIDA', '515.127.4563', '1987-07-03', 'PU_CLERK', '2900.00', '0.00', '114', '30'), 
 ('117', 'Sigal', 'Tobias', 'STOBIAS', '515.127.4564', '1987-07-04', 'PU_CLERK', '2800.00', '0.00', '114', '30');
+
+SELECT * FROM employees;
+
+-- Q1 Write a query to display Employee id and First Name of an employee whose dept_id = 100.
+SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME 
+FROM employees
+WHERE DEPARTMENT_ID  = (
+	SELECT DEPARTMENT_ID
+	FROM departments
+	WHERE DEPARTMENT_ID = 100
+);
