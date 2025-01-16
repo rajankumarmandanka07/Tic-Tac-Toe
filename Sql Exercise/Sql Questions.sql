@@ -257,3 +257,9 @@ WHERE DEPARTMENT_ID  = (
 	FROM departments
 	WHERE DEPARTMENT_ID = 100
 );
+
+-- Q2. Write a query to display the dept_id, maximum salary, of all the departments whose maximum salary is greater than the average salary. (USE: SUB-QUERY) (11 rows) 
+SELECT DEPARTMENT_ID, MAX(SALARY) AS MAX_SALARY
+FROM employees
+GROUP BY DEPARTMENT_ID
+HAVING MAX_SALARY > (SELECT AVG(SALARY) FROM employees);
