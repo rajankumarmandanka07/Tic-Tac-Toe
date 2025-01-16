@@ -68,3 +68,8 @@ ORDER BY population DESC LIMIT 1;
 -- ('Adamstown', '42') 
 SELECT name , population FROM city 
 ORDER BY population LIMIT 1;
+
+-- Q6 Display name of all cities where population is between 670000 to 700000. (13 rows)
+SELECT name , population FROM city 
+WHERE population 
+BETWEEN 670000 AND 700000;
