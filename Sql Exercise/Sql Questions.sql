@@ -108,3 +108,14 @@ From category AS c
 JOIN film_category AS fc ON c.category_id = fc.category_id
 JOIN film AS f ON fc.film_id = f.film_id
 GROUP BY c.name;
+
+-- Q3 Which film categories are long? (5 rows) 
+SELECT c.name, AVG(f.length) AS Average_Length
+FROM category  c
+JOIN film_category  fc 
+ON c.category_id = fc.category_id
+JOIN film  f 
+ON fc.film_id = f.film_id
+GROUP BY c.name
+HAVING AVG(f.length) > 120
+ORDER BY Average_Length DESC LIMIT 5;
