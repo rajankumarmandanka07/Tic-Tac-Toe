@@ -196,3 +196,29 @@ INSERT INTO `departments` (`DEPARTMENT_ID`, `DEPARTMENT_NAME`, `MANAGER_ID`, `LO
 ('250', 'Retail Sales', '0', '1700'), 
 ('260', 'Recruiting', '0', '1700'), 
 ('270', 'Payroll', '0', '1700'); 
+
+SELECT * FROM departments;
+
+
+
+-- Table structure for table `employees` 
+-- 
+CREATE TABLE IF NOT EXISTS `employees` ( 
+`EMPLOYEE_ID` decimal(6,0) NOT NULL DEFAULT '0', 
+`FIRST_NAME` varchar(20) DEFAULT NULL, 
+`LAST_NAME` varchar(25) NOT NULL, 
+`EMAIL` varchar(25) NOT NULL, 
+`PHONE_NUMBER` varchar(20) DEFAULT NULL, 
+`HIRE_DATE` date NOT NULL, 
+`JOB_ID` varchar(10) NOT NULL, 
+`SALARY` decimal(8,2) DEFAULT NULL, 
+`COMMISSION_PCT` decimal(2,2) DEFAULT NULL, 
+`MANAGER_ID` decimal(6,0) DEFAULT NULL, 
+`DEPARTMENT_ID` decimal(4,0) DEFAULT NULL, 
+PRIMARY KEY (`EMPLOYEE_ID`), 
+UNIQUE KEY `EMP_EMAIL_UK` (`EMAIL`), 
+KEY `EMP_DEPARTMENT_IX` (`DEPARTMENT_ID`), 
+KEY `EMP_JOB_IX` (`JOB_ID`), 
+KEY `EMP_MANAGER_IX` (`MANAGER_ID`), 
+KEY `EMP_NAME_IX` (`LAST_NAME`,`FIRST_NAME`) 
+) ; 
