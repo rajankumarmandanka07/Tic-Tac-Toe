@@ -60,7 +60,6 @@ SELECT COUNT(*) FROM city;
 
 -- Q4 Using city table find out which is the most populated city. 
 -- ('Mumbai (Bombay)', '10500000') 
-
 SELECT name , population FROM city 
 ORDER BY population DESC LIMIT 1;
 
@@ -73,3 +72,7 @@ ORDER BY population LIMIT 1;
 SELECT name , population FROM city 
 WHERE population 
 BETWEEN 670000 AND 700000;
+
+-- Q7 Find out 10 most populated cities and display them in a decreasing order i.e. most populated city to appear first. 
+SELECT name , population FROM city 
+ORDER BY population DESC LIMIT 10;
