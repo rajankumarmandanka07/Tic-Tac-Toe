@@ -84,3 +84,7 @@ SELECT * FROM city ORDER BY name LIMIT 10;
 SELECT District, population
 FROM city
 WHERE CountryCode = "USA" AND population > 3000000;
+
+-- Q10 What is the value of name and population in the rows with ID =5, 23, 432 and 2021. Pl. write a single query to display the same. (4 rows). 
+SELECT Id, name, population FROM city
+WHERE Id IN (5, 25, 432, 2021);
