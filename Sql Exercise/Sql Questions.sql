@@ -79,3 +79,8 @@ ORDER BY population DESC LIMIT 10;
 
 -- Q8 Order the data by city name and get first 10 cities from city table. 
 SELECT * FROM city ORDER BY name LIMIT 10;
+
+-- Q9 Display all the districts of USA where population is greater than 3000000, from city table. (6 rows) 
+SELECT District, population
+FROM city
+WHERE CountryCode = "USA" AND population > 3000000;
