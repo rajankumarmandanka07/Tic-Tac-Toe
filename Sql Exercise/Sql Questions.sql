@@ -144,3 +144,8 @@ USE world;
 SELECT code, name, continent, gnp 
 FROM country
 WHERE name LIKE '%d_';
+
+-- Q2 Write a query in SQL to display the code, name, continent and GNP of the 2nd and 3rd highest GNP from “country” table. (Japan & Germany) 
+SELECT code, name, continent, gnp 
+FROM country
+ORDER BY gnp DESC LIMIT 2 OFFSET 1;
