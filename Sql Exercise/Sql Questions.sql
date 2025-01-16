@@ -135,3 +135,12 @@ JOIN payment  p
 ON c.customer_id = p.customer_id
 GROUP BY c.customer_id
 ORDER BY c.last_name;
+
+
+-- Use “world” database for the following questions 
+USE world;
+
+-- Q1 Write a query in SQL to display the code, name, continent and GNP for all the countries whose country name last second word is 'd’, using “country” table. (22 rows) 
+SELECT code, name, continent, gnp 
+FROM country
+WHERE name LIKE '%d_';
