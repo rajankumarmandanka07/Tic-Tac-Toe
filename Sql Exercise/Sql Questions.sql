@@ -50,9 +50,10 @@ ON s.address_id = a.address_id;
 USE world;
 
 -- Q1 Display all columns and 10 rows from table “city”.(10 rows) 
-
 SELECT * FROM city LIMIT 10;
 
 -- Q2 Modify the above query to display from row # 16 to 20 with all columns. (5 rows) 
-
 SELECT * FROM city LIMIT 15, 5;
+
+-- Q3 How many rows are available in the table city. (1 row)-4079. 
+SELECT COUNT(*) FROM city;
