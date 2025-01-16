@@ -63,3 +63,8 @@ SELECT COUNT(*) FROM city;
 
 SELECT name , population FROM city 
 ORDER BY population DESC LIMIT 1;
+
+-- Q5 Using city table find out the least populated city. 
+-- ('Adamstown', '42') 
+SELECT name , population FROM city 
+ORDER BY population LIMIT 1;
