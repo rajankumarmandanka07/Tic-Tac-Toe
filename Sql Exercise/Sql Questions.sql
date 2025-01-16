@@ -88,3 +88,16 @@ WHERE CountryCode = "USA" AND population > 3000000;
 -- Q10 What is the value of name and population in the rows with ID =5, 23, 432 and 2021. Pl. write a single query to display the same. (4 rows). 
 SELECT Id, name, population FROM city
 WHERE Id IN (5, 25, 432, 2021);
+
+-- SQL Practice – Part 2
+-- Use “Sakila” database for the following questions
+
+USE sakila;
+
+-- Q1 Which actor has appeared in the most films? (‘107', 'GINA', 'DEGENERES', '42') 
+SELECT a.actor_id, a.first_name, a.last_name, COUNT(f.film_id) 
+FROM actor AS a JOIN film_actor AS f
+ON a.actor_id = f.actor_id
+GROUP BY a.actor_id, a.first_name, a.last_name
+ORDER BY COUNT(f.film_id) DESC
+LIMIT 1;
