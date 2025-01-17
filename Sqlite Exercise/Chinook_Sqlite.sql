@@ -1,3 +1,5 @@
+-- Exercise 1
+
 -- Q.1 What is the title of the album with AlbumId 67? 
 SELECT AlbumId, Title
 FROM Album
@@ -50,3 +52,12 @@ ORDER BY COUNT(CustomerId) DESC;
 SELECT EmployeeId, FirstName, LastName, Title
 FROM Employee
 WHERE Title = 'Sales Support Agent';
+
+-- Exercise 2
+-- Q.1 Display Most used media types: their names and count in descending order. 
+
+SELECT m.Name, COUNT(TrackId)
+FROM MediaType m
+JOIN Track t ON m.MediaTypeId = t.MediaTypeId
+GROUP BY m.MediaTypeId
+ORDER BY COUNT(TrackId) DESC;
