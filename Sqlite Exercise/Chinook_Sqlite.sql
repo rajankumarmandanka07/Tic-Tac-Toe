@@ -17,3 +17,11 @@ WHERE Ar.Name LIKE '%black%';
 -- Q.4 Provide a query showing a unique/distinct list of billing countries from the Invoice table 
 SELECT DISTINCT BillingCountry
 FROM Invoice;
+
+-- Q.5 Display the city with highest sum total invoice. 
+SELECT BillingCity, SUM(Total) 
+FROM Invoice
+GROUP BY BillingCity
+ORDER BY SUM(Total) DESC
+LIMIT 1;
+
