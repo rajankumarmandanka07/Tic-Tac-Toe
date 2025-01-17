@@ -38,3 +38,10 @@ FROM Customer c
 JOIN Invoice i ON c.CustomerId = i.CustomerId
 GROUP BY c.CustomerId
 ORDER BY SUM(i.total) DESC LIMIT 5;
+
+-- Q.8 Find out state wise count of customerID and list the names of states with count of customerID in decreasing order. Note:- do not include where states is null value.
+SELECT State, COUNT(CustomerId)
+FROM Customer
+WHERE State IS NOT NULL
+GROUP BY State
+ORDER BY COUNT(CustomerId) DESC;
