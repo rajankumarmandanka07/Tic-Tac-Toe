@@ -25,3 +25,9 @@ GROUP BY BillingCity
 ORDER BY SUM(Total) DESC
 LIMIT 1;
 
+-- Q.6 Produce a table that lists each country and the number of customers in that country. (You only need to include countries that have customers) in descending order. (Highest count at the top) 
+SELECT Country, COUNT(CustomerId)
+FROM Customer
+GROUP BY Country
+HAVING COUNT(CustomerId) > 0
+ORDER BY COUNT(CustomerId) DESC;
