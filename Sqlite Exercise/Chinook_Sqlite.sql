@@ -13,3 +13,7 @@ SELECT Al.Title, Ar.Name
 FROM Album Al
 JOIN Artist Ar ON Al.ArtistId = Ar.ArtistId
 WHERE Ar.Name LIKE '%black%';
+
+-- Q.4 Provide a query showing a unique/distinct list of billing countries from the Invoice table 
+SELECT DISTINCT BillingCountry
+FROM Invoice;
