@@ -45,3 +45,8 @@ FROM Customer
 WHERE State IS NOT NULL
 GROUP BY State
 ORDER BY COUNT(CustomerId) DESC;
+
+-- Q.10 Provide a query showing only the Employees who are Sales Agents.
+SELECT EmployeeId, FirstName, LastName, Title
+FROM Employee
+WHERE Title = 'Sales Support Agent';
