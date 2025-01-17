@@ -31,3 +31,10 @@ FROM Customer
 GROUP BY Country
 HAVING COUNT(CustomerId) > 0
 ORDER BY COUNT(CustomerId) DESC;
+
+-- Q.7 Find the top five customers in terms of sales i.e. find the five customers whose total combined invoice amounts are the highest. Give their name, CustomerId and total invoice amount. Use join 
+SELECT c.CustomerId, c.FirstName, c.LastName, SUM(i.total)
+FROM Customer c
+JOIN Invoice i ON c.CustomerId = i.CustomerId
+GROUP BY c.CustomerId
+ORDER BY SUM(i.total) DESC LIMIT 5;
