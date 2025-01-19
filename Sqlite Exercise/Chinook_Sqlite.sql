@@ -90,3 +90,10 @@ JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
 GROUP BY Customer.CustomerId
 ORDER BY Total_Spent DESC
 LIMIT 1;
+
+-- Q.5 Provide a query showing Customers (just their full names, customer ID and country) who are not in the US. 
+SELECT Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, 
+       Customer.CustomerId, 
+       Customer.Country
+FROM Customer
+WHERE Customer.Country != 'USA';
