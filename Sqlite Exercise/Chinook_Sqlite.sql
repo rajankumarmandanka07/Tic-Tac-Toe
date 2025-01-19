@@ -136,3 +136,13 @@ JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId
 GROUP BY MediaType.MediaTypeId
 ORDER BY Purchase_Count DESC
 LIMIT 1;
+
+-- Q.10 Provide a query that shows the purchased tracks of 2013. Display Track name and Units sold. 
+SELECT Track.Name AS Track_Name, 
+       SUM(InvoiceLine.Quantity) AS Units_Sold
+FROM Track
+JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId
+JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId
+WHERE strftime('%Y', Invoice.InvoiceDate) = '2013'
+GROUP BY Track.TrackId
+ORDER BY Units_Sold DESC;
