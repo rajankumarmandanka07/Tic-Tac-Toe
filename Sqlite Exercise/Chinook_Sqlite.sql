@@ -97,3 +97,21 @@ SELECT Customer.FirstName || ' ' || Customer.LastName AS Customer_Name,
        Customer.Country
 FROM Customer
 WHERE Customer.Country != 'USA';
+
+-- Q.6 Provide a query that shows the total number of tracks in each playlist in descending order. The Playlist name should be included on the resultant table.
+SELECT Playlist.Name AS Playlist_Name, 
+       COUNT(PlaylistTrack.TrackId) AS Total_Tracks
+FROM Playlist
+JOIN PlaylistTrack ON Playlist.PlaylistId = PlaylistTrack.PlaylistId
+GROUP BY Playlist.PlaylistId
+ORDER BY Total_Tracks DESC;
+
+-- Q.7 Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
+SELECT Track.Name AS Track_Name, 
+       Album.Title AS Album_Name, 
+       MediaType.Name AS Media_Type, 
+       Genre.Name AS Genre
+FROM Track
+JOIN Album ON Track.AlbumId = Album.AlbumId
+JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
+JOIN Genre ON Track.GenreId = Genre.GenreId;
