@@ -78,6 +78,15 @@ JOIN Album ON Artist.ArtistId = Album.ArtistId
 JOIN Track ON Album.AlbumId = Track.AlbumId
 JOIN Genre ON Track.GenreId = Genre.GenreId
 WHERE Genre.Name = 'Rock'
-GROUP BY Artist.ArtistId, Artist.Name
+GROUP BY Artist.ArtistId
 ORDER BY Total_Tracks DESC
 LIMIT 10;
+
+-- Q.4 Display the Best customer (in case of amount spent). Full name (first name and last name) 
+SELECT Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, 
+       SUM(Invoice.Total) AS Total_Spent
+FROM Customer
+JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId
+GROUP BY Customer.CustomerId
+ORDER BY Total_Spent DESC
+LIMIT 1;
