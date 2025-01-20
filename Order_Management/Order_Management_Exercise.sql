@@ -44,4 +44,5 @@ END AS inventory_status
 FROM product p
 JOIN product_class pc
 ON p.product_class_code = pc.product_class_code
-ORDER BY pc.product_class_desc, p.product_id;
+ORDER BY pc.product_class_desc;
+
