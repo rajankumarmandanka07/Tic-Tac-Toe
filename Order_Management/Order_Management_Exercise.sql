@@ -71,3 +71,12 @@ WHERE p.PRODUCT_ID IN (
     ) OR p.PRODUCT_ID = 201
 GROUP BY p.PRODUCT_ID, p.PRODUCT_DESC
 ORDER BY TOTAL_QUANTITY DESC;
+
+
+-- 6. Write a query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.(225 ROWS) [NOTE: TABLE TO BE USED - online_customer, order_header, order_items, product]
+SELECT oc.CUSTOMER_ID, CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_NAME, oc.CUSTOMER_EMAIL, oh.ORDER_ID, p.PRODUCT_DESC, oi.PRODUCT_QUANTITY, (oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS SUBTOTAL
+FROM ONLINE_CUSTOMER oc
+LEFT JOIN ORDER_HEADER oh ON oc.CUSTOMER_ID = oh.CUSTOMER_ID
+LEFT JOIN ORDER_ITEMS oi ON oh.ORDER_ID = oi.ORDER_ID
+LEFT JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
+ORDER BY oc.CUSTOMER_ID;
