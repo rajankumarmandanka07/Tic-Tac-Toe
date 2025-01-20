@@ -93,3 +93,20 @@ WHERE (c.LEN * c.WIDTH * c.HEIGHT) > (
     )
 ORDER BY CARTON_VOL ASC
 LIMIT 1;
+
+
+-- 10. Write a query to display product class description ,total quantity (sum(product_quantity),Total value (product_quantity * product price) and show which class of products have been shipped highest(Quantity) to countries outside India other than USA? Also show the total value of those items. (1 ROWS)[NOTE:PRODUCT TABLE,ADDRESS TABLE,ONLINE_CUSTOMER TABLE,ORDER_HEADER TABLE,ORDER_ITEMS TABLE,PRODUCT_CLASS TABLE]
+
+SELECT pc.PRODUCT_CLASS_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY, SUM(oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS TOTAL_VALUE
+FROM PRODUCT_CLASS pc
+JOIN PRODUCT p ON pc.PRODUCT_CLASS_CODE = p.PRODUCT_CLASS_CODE
+JOIN ORDER_ITEMS oi ON p.PRODUCT_ID = oi.PRODUCT_ID
+JOIN ORDER_HEADER oh ON oi.ORDER_ID = oh.ORDER_ID
+JOIN ONLINE_CUSTOMER oc ON oh.CUSTOMER_ID = oc.CUSTOMER_ID
+JOIN ADDRESS a ON oc.ADDRESS_ID = a.ADDRESS_ID
+WHERE a.COUNTRY NOT IN ('India', 'USA')
+GROUP BY pc.PRODUCT_CLASS_DESC
+ORDER BY TOTAL_QUANTITY DESC
+LIMIT 1;
+
+    
