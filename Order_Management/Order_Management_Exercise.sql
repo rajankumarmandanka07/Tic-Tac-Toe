@@ -80,3 +80,16 @@ LEFT JOIN ORDER_HEADER oh ON oc.CUSTOMER_ID = oh.CUSTOMER_ID
 LEFT JOIN ORDER_ITEMS oi ON oh.ORDER_ID = oi.ORDER_ID
 LEFT JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
 ORDER BY oc.CUSTOMER_ID;
+
+
+-- 7. Write a query to display carton id, (len*width*height) as carton_vol and identify the optimum carton (carton with the least volume whose volume is greater than the total volume of all items (len * width * height * product_quantity)) for a given order whose order id is 10006, Assume all items of an order are packed into one single carton (box). (1 ROW) [NOTE: CARTON TABLE]
+SELECT c.CARTON_ID, (c.LEN * c.WIDTH * c.HEIGHT) AS CARTON_VOL
+FROM CARTON c
+WHERE (c.LEN * c.WIDTH * c.HEIGHT) > (
+        SELECT SUM(p.LEN * p.WIDTH * p.HEIGHT * oi.PRODUCT_QUANTITY) AS TOTAL_ITEM_VOLUME
+        FROM ORDER_ITEMS oi
+        JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
+        WHERE oi.ORDER_ID = 10006
+    )
+ORDER BY CARTON_VOL ASC
+LIMIT 1;
