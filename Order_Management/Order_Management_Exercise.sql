@@ -43,6 +43,31 @@ CASE
 END AS inventory_status
 FROM product p
 JOIN product_class pc
-ON p.product_class_code = pc.product_class_code
-ORDER BY pc.product_class_desc;
+ON p.product_class_code = pc.product_class_code;
+-- ORDER BY pc.product_class_desc;
 
+
+-- 3. Write a query to Show the count of cities in all countries other than USA & MALAYSIA, with more than 1 city, in the descending order of CITIES. (2 rows) [NOTE: ADDRESS TABLE, Do not use Distinct]
+SELECT country, COUNT(city) AS city_count
+FROM address
+WHERE country NOT IN ('USA', 'MALAYSIA')
+GROUP BY country
+HAVING COUNT(city) > 1
+ORDER BY city_count DESC;
+
+-- 5. Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
+SELECT p.PRODUCT_ID, p.PRODUCT_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY
+FROM ORDER_ITEMS oi
+JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
+WHERE p.PRODUCT_ID IN (
+        SELECT PRODUCT_ID
+        FROM ORDER_ITEMS
+        GROUP BY PRODUCT_ID
+        HAVING SUM(PRODUCT_QUANTITY) = (SELECT MAX(TOTAL_QUANTITY)
+                FROM (SELECT PRODUCT_ID,SUM(PRODUCT_QUANTITY) AS TOTAL_QUANTITY
+                     FROM ORDER_ITEMS
+                     GROUP BY PRODUCT_ID ) AS SubQuery
+				)
+    ) OR p.PRODUCT_ID = 201
+GROUP BY p.PRODUCT_ID, p.PRODUCT_DESC
+ORDER BY TOTAL_QUANTITY DESC;
