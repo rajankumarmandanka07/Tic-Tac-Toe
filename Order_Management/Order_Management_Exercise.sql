@@ -56,6 +56,17 @@ GROUP BY country
 HAVING COUNT(city) > 1
 ORDER BY city_count DESC;
 
+-- 4. Write a query to display the customer_id,customer full name ,city,pincode,and order details (order id, product class desc, product desc, subtotal(product_quantity * product_price)) for orders shipped to cities whose pin codes do not have any 0s in them. Sort the output on customer name and subtotal. (52 ROWS) [NOTE: TABLE TO BE USED - online_customer, address, order_header, order_items, product, product_class]
+SELECT oc.CUSTOMER_ID,CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_FULL_NAME,a.CITY,a.PINCODE,oh.ORDER_ID,pc.PRODUCT_CLASS_DESC,p.PRODUCT_DESC, (oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS SUBTOTAL
+FROM ONLINE_CUSTOMER oc
+JOIN ADDRESS a ON oc.ADDRESS_ID = a.ADDRESS_ID
+JOIN ORDER_HEADER oh ON oc.CUSTOMER_ID = oh.CUSTOMER_ID
+JOIN ORDER_ITEMS oi ON oh.ORDER_ID = oi.ORDER_ID
+JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
+JOIN PRODUCT_CLASS pc ON p.PRODUCT_CLASS_CODE = pc.PRODUCT_CLASS_CODE
+WHERE a.PINCODE NOT LIKE '%0%'
+ORDER BY CUSTOMER_FULL_NAME, SUBTOTAL;
+
 -- 5. Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
 SELECT p.PRODUCT_ID, p.PRODUCT_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY
 FROM ORDER_ITEMS oi
