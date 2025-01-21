@@ -60,24 +60,15 @@ ORDER BY city_count DESC;
 SELECT p.PRODUCT_ID, p.PRODUCT_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY
 FROM ORDER_ITEMS oi
 JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
-WHERE p.PRODUCT_ID = 201
-   OR (p.PRODUCT_ID IN (
+WHERE p.PRODUCT_ID = 201 
+   OR p.PRODUCT_ID = (
         SELECT PRODUCT_ID
         FROM ORDER_ITEMS
         GROUP BY PRODUCT_ID
-        HAVING SUM(PRODUCT_QUANTITY) = (
-            SELECT MAX(TOTAL_QUANTITY)
-            FROM (
-                SELECT PRODUCT_ID, SUM(PRODUCT_QUANTITY) AS TOTAL_QUANTITY
-                FROM ORDER_ITEMS
-                GROUP BY PRODUCT_ID
-            ) AS SubQuery
-        )
-    ) AND p.PRODUCT_ID != 201)
-GROUP BY p.PRODUCT_ID
-ORDER BY CASE WHEN p.PRODUCT_ID = 201 THEN 1 ELSE 2 END
-LIMIT 1;
-
+        ORDER BY SUM(PRODUCT_QUANTITY) DESC
+        LIMIT 1
+    )
+GROUP BY p.PRODUCT_ID LIMIT 1;
 
 -- 6. Write a query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.(225 ROWS) [NOTE: TABLE TO BE USED - online_customer, order_header, order_items, product]
 SELECT oc.CUSTOMER_ID, CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_NAME, oc.CUSTOMER_EMAIL, oh.ORDER_ID, p.PRODUCT_DESC, oi.PRODUCT_QUANTITY, (oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS SUBTOTAL
@@ -108,10 +99,9 @@ JOIN ORDER_HEADER oh ON oc.CUSTOMER_ID = oh.CUSTOMER_ID
 JOIN ORDER_ITEMS oi ON oh.ORDER_ID = oi.ORDER_ID
 WHERE oh.ORDER_ID > 10060
 GROUP BY oh.ORDER_ID
-ORDER BY oh.ORDER_ID;
+ORDER BY oh.ORDER_ID ASC;
 
 -- 10. Write a query to display product class description ,total quantity (sum(product_quantity),Total value (product_quantity * product price) and show which class of products have been shipped highest(Quantity) to countries outside India other than USA? Also show the total value of those items. (1 ROWS)[NOTE:PRODUCT TABLE,ADDRESS TABLE,ONLINE_CUSTOMER TABLE,ORDER_HEADER TABLE,ORDER_ITEMS TABLE,PRODUCT_CLASS TABLE]
-
 SELECT pc.PRODUCT_CLASS_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY, SUM(oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS TOTAL_VALUE
 FROM PRODUCT_CLASS pc
 JOIN PRODUCT p ON pc.PRODUCT_CLASS_CODE = p.PRODUCT_CLASS_CODE
@@ -122,5 +112,3 @@ JOIN ADDRESS a ON oc.ADDRESS_ID = a.ADDRESS_ID
 WHERE a.COUNTRY NOT IN ('India', 'USA')
 GROUP BY pc.PRODUCT_CLASS_DESC
 ORDER BY TOTAL_QUANTITY DESC LIMIT 1;
-
-    
