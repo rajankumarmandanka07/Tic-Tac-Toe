@@ -102,7 +102,6 @@ WHERE (c.LEN * c.WIDTH * c.HEIGHT) > (
 ORDER BY CARTON_VOL ASC
 LIMIT 1;
 
-
 -- 9. Write a query to display the order_id, customer id and customer full name of customers along with (product_quantity) as total quantity of products shipped for order ids > 10060. (6 ROWS) [NOTE: TABLES TO BE USED - online_customer, order_header, order_items]
 SELECT oh.ORDER_ID, oc.CUSTOMER_ID, CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_FULLNAME, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY
 FROM ONLINE_CUSTOMER oc
