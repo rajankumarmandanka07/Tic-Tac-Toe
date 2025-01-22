@@ -21,40 +21,43 @@ ORDER BY PRODUCT_CLASS_CODE DESC;
 -- c. Rest of the categories, if qty <= 15 – 'Low Stock', 16 <= qty <= 50 – 'In Stock', >= 51 – 'Enough stock' For all categories, if available quantity is 0, show 'Out of stock'. 
 -- Hint: Use case statement. (60 ROWS) [NOTE: TABLES TO BE USED – product, product_class]
 
-SELECT pc.product_class_desc, p.product_id, p.product_desc, p.product_quantity_avail,
-CASE 
-	WHEN p.product_quantity_avail = 0 THEN 'Out of stock'
-	WHEN pc.product_class_desc IN ('Electronics', 'Computer') THEN 
-		CASE 
-			WHEN p.product_quantity_avail <= 10 THEN 'Low stock'
-			WHEN p.product_quantity_avail BETWEEN 11 AND 30 THEN 'In stock'
-			WHEN p.product_quantity_avail >= 31 THEN 'Enough stock'
-		END
-	WHEN pc.product_class_desc IN ('Stationery', 'Clothes') THEN 
-		CASE 
-			WHEN p.product_quantity_avail <= 20 THEN 'Low stock'
-			WHEN p.product_quantity_avail BETWEEN 21 AND 80 THEN 'In stock'
-			WHEN p.product_quantity_avail >= 81 THEN 'Enough stock'
-		END
-	ELSE 
-		CASE 
-			WHEN p.product_quantity_avail <= 15 THEN 'Low stock'
-			WHEN p.product_quantity_avail BETWEEN 16 AND 50 THEN 'In stock'
-			WHEN p.product_quantity_avail >= 51 THEN 'Enough stock'
-		END
-END AS inventory_status
-FROM product p
-JOIN product_class pc
-ON p.product_class_code = pc.product_class_code;
-
+SELECT 
+    PC.PRODUCT_CLASS_DESC, 
+    P.PRODUCT_ID, 
+    P.PRODUCT_DESC, 
+    P.PRODUCT_QUANTITY_AVAIL,
+    CASE 
+        WHEN P.PRODUCT_QUANTITY_AVAIL = 0 THEN 'Out of stock'
+        WHEN PC.PRODUCT_CLASS_DESC IN ('Electronics', 'Computer') THEN 
+            CASE 
+                WHEN P.PRODUCT_QUANTITY_AVAIL <= 10 THEN 'Low stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL BETWEEN 11 AND 30 THEN 'In stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL >= 31 THEN 'Enough stock'
+            END
+        WHEN PC.PRODUCT_CLASS_DESC IN ('Stationery', 'Clothes') THEN 
+            CASE 
+                WHEN P.PRODUCT_QUANTITY_AVAIL <= 20 THEN 'Low stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL BETWEEN 21 AND 80 THEN 'In stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL >= 81 THEN 'Enough stock'
+            END
+        ELSE 
+            CASE 
+                WHEN P.PRODUCT_QUANTITY_AVAIL <= 15 THEN 'Low stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL BETWEEN 16 AND 50 THEN 'In stock'
+                WHEN P.PRODUCT_QUANTITY_AVAIL >= 51 THEN 'Enough stock'
+            END
+    END AS INVENTORY_STATUS
+FROM PRODUCT P
+JOIN PRODUCT_CLASS PC
+ON P.PRODUCT_CLASS_CODE = PC.PRODUCT_CLASS_CODE;
 
 -- 3. Write a query to Show the count of cities in all countries other than USA & MALAYSIA, with more than 1 city, in the descending order of CITIES. (2 rows) [NOTE: ADDRESS TABLE, Do not use Distinct]
-SELECT country, COUNT(city) AS city_count
-FROM address
-WHERE country NOT IN ('USA', 'MALAYSIA')
-GROUP BY country
-HAVING COUNT(city) > 1
-ORDER BY city_count DESC;
+SELECT COUNTRY, COUNT(CITY) AS CITY_COUNT
+FROM ADDRESS
+WHERE COUNTRY NOT IN ('USA', 'MALAYSIA')
+GROUP BY COUNTRY
+HAVING COUNT(CITY) > 1
+ORDER BY CITY_COUNT DESC;
 
 -- 4. Write a query to display the customer_id,customer full name ,city,pincode,and order details (order id, product class desc, product desc, subtotal(product_quantity * product_price)) for orders shipped to cities whose pin codes do not have any 0s in them. Sort the output on customer name and subtotal. (52 ROWS) [NOTE: TABLE TO BE USED - online_customer, address, order_header, order_items, product, product_class]
 SELECT oc.CUSTOMER_ID,CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_FULL_NAME,a.CITY,a.PINCODE,oh.ORDER_ID,pc.PRODUCT_CLASS_DESC,p.PRODUCT_DESC, (oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS SUBTOTAL
@@ -68,10 +71,17 @@ WHERE a.PINCODE NOT LIKE '%0%'
 ORDER BY CUSTOMER_FULL_NAME, SUBTOTAL;
 
 -- 5. Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
-SELECT p.PRODUCT_ID, p.PRODUCT_DESC, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY
+SELECT p.PRODUCT_ID, p.PRODUCT_DESC, p.PRODUCT_CLASS_CODE, p.PRODUCT_PRICE, p.PRODUCT_QUANTITY_AVAIL, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY_IN_ORDER
 FROM ORDER_ITEMS oi
 JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
-WHERE p.PRODUCT_ID = 201 
+WHERE p.PRODUCT_ID = 201
+GROUP BY p.PRODUCT_ID;
+
+
+SELECT p.PRODUCT_ID, p.PRODUCT_DESC, p.PRODUCT_CLASS_CODE, p.PRODUCT_PRICE, p.PRODUCT_QUANTITY_AVAIL, SUM(oi.PRODUCT_QUANTITY) AS TOTAL_QUANTITY_IN_ORDER
+FROM ORDER_ITEMS oi
+JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID
+WHERE p.PRODUCT_ID = 201
    OR p.PRODUCT_ID = (
         SELECT PRODUCT_ID
         FROM ORDER_ITEMS
@@ -79,7 +89,8 @@ WHERE p.PRODUCT_ID = 201
         ORDER BY SUM(PRODUCT_QUANTITY) DESC
         LIMIT 1
     )
-GROUP BY p.PRODUCT_ID LIMIT 1;
+GROUP BY p.PRODUCT_ID;
+SELECT * FROM ORDER_ITEMS;
 
 -- 6. Write a query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.(225 ROWS) [NOTE: TABLE TO BE USED - online_customer, order_header, order_items, product]
 SELECT oc.CUSTOMER_ID, CONCAT(oc.CUSTOMER_FNAME, ' ', oc.CUSTOMER_LNAME) AS CUSTOMER_NAME, oc.CUSTOMER_EMAIL, oh.ORDER_ID, p.PRODUCT_DESC, oi.PRODUCT_QUANTITY, (oi.PRODUCT_QUANTITY * p.PRODUCT_PRICE) AS SUBTOTAL
