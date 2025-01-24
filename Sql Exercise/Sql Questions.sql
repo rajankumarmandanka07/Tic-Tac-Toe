@@ -289,59 +289,6 @@ WHERE e.DEPARTMENT_ID IN (
 SELECT * FROM DEPARTMENTS;
 SELECT * FROM EMPLOYEES;
 
-SELECT 
-    e.EMPLOYEE_ID,
-    e.FIRST_NAME,
-    e.LAST_NAME,
-    e.EMAIL,
-    e.DEPARTMENT_ID,
-    e.SALARY AS EMPLOYEE_SALARY,
-    max_salaries.MAX_SALARY
-FROM 
-    employees e
-JOIN 
-    (SELECT 
-        DEPARTMENT_ID, 
-        MAX(SALARY) AS MAX_SALARY
-     FROM 
-        employees
-     GROUP BY 
-        DEPARTMENT_ID
-     HAVING 
-        MAX(SALARY) > (SELECT AVG(SALARY) FROM employees)
-    ) AS max_salaries
-ON 
-    e.DEPARTMENT_ID = max_salaries.DEPARTMENT_ID
-ORDER BY 
-    e.DEPARTMENT_ID, e.SALARY DESC;
-
-SELECT 
-    e.EMPLOYEE_ID,
-    e.FIRST_NAME,
-    e.LAST_NAME,
-    e.EMAIL,
-    e.DEPARTMENT_ID,
-    e.SALARY AS EMPLOYEE_SALARY,
-    avg_salaries.AVG_SALARY_OF_DEPARTMENT
-FROM 
-    employees e
-JOIN 
-    (SELECT 
-        DEPARTMENT_ID, 
-        AVG(SALARY) AS AVG_SALARY_OF_DEPARTMENT
-     FROM 
-        employees
-     GROUP BY 
-        DEPARTMENT_ID
-    ) AS avg_salaries
-ON 
-    e.DEPARTMENT_ID = avg_salaries.DEPARTMENT_ID
-WHERE 
-    e.SALARY > avg_salaries.AVG_SALARY_OF_DEPARTMENT
-ORDER BY 
-    e.DEPARTMENT_ID, e.SALARY DESC;
-
-
 
 SELECT * FROM employees;
 
