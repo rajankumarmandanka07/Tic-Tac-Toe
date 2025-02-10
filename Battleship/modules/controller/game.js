@@ -1,6 +1,6 @@
-import { Battlefield } from "./battlefield.js";
-import { UIHandler } from "./uiHandler.js";
-import { GameLogic } from "./gameLogic.js";
+import { Battlefield } from "./battleField.js";
+import { UIHandler } from "../management/uiHandler.js";
+import { GameLogic } from "../management/gameLogic.js";
 
 class Game {
   constructor(battlefieldSize) {

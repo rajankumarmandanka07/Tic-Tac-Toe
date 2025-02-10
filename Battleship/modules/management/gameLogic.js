@@ -1,4 +1,4 @@
-import { IGameLogic } from "./interfaces.js";
+import { IGameLogic } from "../controller/interfaces.js";
 
 class GameLogic extends IGameLogic {
     constructor(battlefield, uiHandler, nextTurnButtonId) {

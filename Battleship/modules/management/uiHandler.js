@@ -1,4 +1,4 @@
-import { IUIHandler } from "./interfaces.js";
+import { IUIHandler } from "../controller/interfaces.js";
 
 class UIHandler extends IUIHandler {
     constructor(instructionId, resultsId) {
