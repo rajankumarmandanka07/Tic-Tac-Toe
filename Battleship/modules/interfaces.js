@@ -1,20 +1,19 @@
-// interfaces.js
+class IBattlefield {
+  create() { }
+  reset() { }
+}
 
-export class IBattlefield {
-    create() {}
-    reset() {}
-  }
-  
-  export class IGameLogic {
-    playerMove(event) {}
-    handleNextTurn() {}
-    endGame() {}
-    restartGame() {}
-  }
-  
-  export class IUIHandler {
-    updateInstruction(text) {}
-    showResults(totalHits, totalMisses) {}
-    disableBoard() {}
-  }
-  
+class IGameLogic {
+  playerMove(event) { }
+  handleNextTurn() { }
+  endGame() { }
+  restartGame() { }
+}
+
+class IUIHandler {
+  updateInstruction(text) { }
+  showResults(totalHits, totalMisses) { }
+  disableBoard() { }
+}
+
+export { IBattlefield, IGameLogic, IUIHandler };
