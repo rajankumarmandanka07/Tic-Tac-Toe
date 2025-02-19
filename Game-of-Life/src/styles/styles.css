@@ -1,0 +1,30 @@
+body {
+    background-color: #f8f9fa;
+}
+
+#grid {
+    display: grid;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+.alive {
+    background-color: #28a745;
+}
+
+.control-buttons {
+    gap: 15px;
+}
