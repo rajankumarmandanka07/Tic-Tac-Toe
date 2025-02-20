@@ -1,6 +1,6 @@
 import { GameBoard } from './models/GameBoard.js';
 import { GameNextGeneration } from './models/GameNextGeneration.js';
-import { GameController } from './models/GameController.js';
+import { GameController } from './controllers/GameController.js';
 
 const rows = 30;
 const cols = 30;
