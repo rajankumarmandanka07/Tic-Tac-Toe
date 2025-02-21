@@ -1,5 +1,5 @@
-import { GameBoard } from './models/GameBoard.js';
-import { GameNextGeneration } from './models/GameNextGeneration.js';
+import { GameBoard } from './managers/GameBoard.js';
+import { GameNextGeneration } from './managers/GameNextGeneration.js';
 import { GameController } from './controllers/GameController.js';
 
 const rows = 30;

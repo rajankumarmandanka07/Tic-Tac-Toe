@@ -22,14 +22,14 @@ export class GameNextGeneration {
         for (let i = 0; i < this.gameBoard.rows; i++) {
             for (let j = 0; j < this.gameBoard.cols; j++) {
                 const neighbors = this.countNeighbors(i, j);
-                newBoard[i][j] = this.applayRules(this.gameBoard.board[i][j], neighbors)
+                newBoard[i][j] = this.applyRules(this.gameBoard.board[i][j], neighbors)
                 
             }
         }
         this.gameBoard.board = newBoard;
     }
 
-    applayRules(currentGeneration, neighbors) {
+    applyRules(currentGeneration, neighbors) {
         if (currentGeneration === 1) {
             return neighbors === 2 || neighbors === 3 ? 1 : 0;
         } else {
